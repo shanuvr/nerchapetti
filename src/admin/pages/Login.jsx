@@ -45,7 +45,7 @@ export default function Login() {
           </ul>
         </div>
 
-        <p className="font-malayalam text-sm text-blue-800/80 font-medium">സ്തോത്രക്കാഴ്ച by Programers</p>
+        <p className="font-malayalam text-sm text-blue-800/80 font-medium">നേർച്ചപ്പെട്ടി by Programmers</p>
       </aside>
 
       {/* Form */}

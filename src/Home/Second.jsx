@@ -1,11 +1,11 @@
 import { useRef, useState, useCallback, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { motion, AnimatePresence, useAnimationControls } from 'framer-motion';
-import { ArrowLeft, Bell, Loader2, Info, X, Phone, MessageCircle, Mail, MapPin, ShieldCheck, Clock, Church } from 'lucide-react';
+import { ArrowLeft, Bell, Loader2, Info, X, Phone, MessageCircle, Mail, MapPin, Clock, Church } from 'lucide-react';
 import Money from '../components/Money';
 import Label from '../components/Label';
 import NerchapettiBox from '../components/NerchapettiBox';
-import { moneyKind, moneySrc } from '../data/money';
+import { moneyKind } from '../data/money';
 import { playChurchBell, playCoinDrop, playNoteDrop } from '../utils/audio';
 import { celebrateOffering } from '../utils/confetti';
 
@@ -46,24 +46,24 @@ function ParishInfoModal({ onClose, churchName = "St. Mary's Metropolitan Cathed
         animate={{ scale: 1, opacity: 1, y: 0 }}
         exit={{ scale: 0.9, opacity: 0, y: 12 }}
         transition={{ type: 'spring', stiffness: 340, damping: 28, mass: 0.75 }}
-        className="relative w-full max-w-[320px] rounded-3xl p-5 bg-gradient-to-b from-slate-900/98 via-slate-900/95 to-slate-950/98 border border-blue-400/40 shadow-[0_20px_60px_rgba(0,0,0,0.9),0_0_40px_rgba(37,99,235,0.25)] transform-gpu will-change-transform"
+        className="relative w-full max-w-[320px] rounded-3xl p-5 bg-gradient-to-b from-slate-900/95 via-sky-950/90 to-slate-950/98 border border-sky-300/50 shadow-[0_20px_60px_rgba(0,0,0,0.9),0_0_40px_rgba(14,165,233,0.3)] transform-gpu will-change-transform"
       >
         {/* Ambient Top Glow */}
-        <div className="absolute left-1/2 -translate-x-1/2 top-0 w-32 h-16 -translate-y-1/2 rounded-full bg-blue-400/25 blur-2xl pointer-events-none" />
+        <div className="absolute left-1/2 -translate-x-1/2 top-0 w-32 h-16 -translate-y-1/2 rounded-full bg-sky-400/35 blur-2xl pointer-events-none" />
 
         {/* Close Icon */}
         <button
           onClick={onClose}
           aria-label="Close modal"
-          className="absolute top-3.5 right-3.5 p-1.5 rounded-full bg-white/5 hover:bg-white/10 text-slate-400 hover:text-blue-200 transition-colors cursor-pointer"
+          className="absolute top-3.5 right-3.5 p-1.5 rounded-full bg-white/5 hover:bg-white/10 text-slate-400 hover:text-sky-200 transition-colors cursor-pointer"
         >
           <X className="w-4 h-4" />
         </button>
 
         {/* Parish Badge */}
         <div className="flex flex-col items-center text-center">
-          <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-blue-500/30 to-blue-700/20 border border-blue-400/40 flex items-center justify-center text-blue-200 shadow-[0_0_20px_rgba(59,130,246,0.35)] mb-2">
-            <Church className="w-6 h-6 text-blue-300" />
+          <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-sky-500/35 to-blue-600/30 border border-sky-300/50 flex items-center justify-center text-sky-200 shadow-[0_0_20px_rgba(56,189,248,0.4)] mb-2">
+            <Church className="w-6 h-6 text-sky-300" />
           </div>
           <h3 className="font-cinzel text-sm sm:text-base font-bold text-white leading-tight">
             {churchName}
@@ -123,12 +123,6 @@ function ParishInfoModal({ onClose, churchName = "St. Mary's Metropolitan Cathed
           </div>
         </div>
 
-        {/* Tax Exemption Badge */}
-        <div className="mt-2.5 flex items-center justify-center gap-1.5 py-1.5 px-2.5 rounded-lg bg-emerald-400/10 border border-emerald-400/20 text-emerald-300 text-[9px] font-medium">
-          <ShieldCheck className="w-3.5 h-3.5 shrink-0" />
-          <span>Church Trust Reg: CH-TR-00892 · 80G Tax Exempt</span>
-        </div>
-
         {/* Close Button */}
         <button
           onClick={onClose}
@@ -157,7 +151,6 @@ export default function Second({
   const [ripples, setRipples] = useState([]);
   const [rung, setRung] = useState(0);
   const [slotGlow, setSlotGlow] = useState(false);
-  const [placed, setPlaced] = useState([]);
   const [paying, setPaying] = useState(false);
 
   const ringBell = useCallback(() => {
@@ -198,10 +191,10 @@ export default function Second({
       if (!nerchapetti) return;
 
       const isCoin = moneyKind(value) === 'coin';
-      // Trajectory targets the top slot for coins, and front panel for notes
+      // Trajectory targets the top roof slot (26%) for coins, and front panel (62%) for notes
       const target = {
         x: nerchapetti.left + nerchapetti.width / 2,
-        y: isCoin ? nerchapetti.top + nerchapetti.height * 0.22 : nerchapetti.top + nerchapetti.height * 0.68,
+        y: isCoin ? nerchapetti.top + nerchapetti.height * 0.26 : nerchapetti.top + nerchapetti.height * 0.62,
       };
 
       const id = ++flightId;
@@ -215,16 +208,6 @@ export default function Second({
 
       setSlotGlow(true);
       const glowTimer = setTimeout(() => setSlotGlow(false), 700);
-
-      if (isCoin) {
-        setPlaced((list) => {
-          const n = list.length;
-          return [
-            ...list.slice(-5),
-            { id, src: moneySrc(value), y: -6 - (n % 3) * 4, r: (n % 5) * 12 - 24 },
-          ];
-        });
-      }
 
       lastGlowTimer.current = glowTimer;
       boxAnim.start({ scale: [1, 1.04, 1], transition: { duration: 0.4, ease: 'easeOut' } });
@@ -314,14 +297,17 @@ export default function Second({
       transition={{ duration: 0.35, ease: 'easeOut' }}
       className="relative w-full h-full flex flex-col justify-between items-center p-3.5 sm:p-4 overflow-hidden"
     >
+      {/* Gentle dark gradient from coins downwards so coins and notes are clearly visible against bright floor */}
+      <div className="absolute inset-x-0 bottom-0 top-[45%] pointer-events-none bg-gradient-to-b from-transparent via-slate-950/45 to-slate-950/80 z-0" />
+
       {/* 1. Header Bar */}
       <div className="w-full flex items-center justify-between z-10 shrink-0 pt-0.5">
         <button
           onClick={onBack}
           disabled={paying}
           aria-label="Back"
-          className={`p-2 rounded-full bg-blue-500/10 text-blue-300 border border-blue-400/30 backdrop-blur-md transition-colors ${
-            paying ? 'opacity-40 cursor-not-allowed' : 'cursor-pointer hover:bg-blue-500/20'
+          className={`p-2 rounded-full bg-sky-700/50 text-white border border-sky-400/50 backdrop-blur-md transition-colors ${
+            paying ? 'opacity-40 cursor-not-allowed' : 'cursor-pointer hover:bg-sky-700/65'
           }`}
         >
           <ArrowLeft className="w-4 h-4" />
@@ -331,13 +317,13 @@ export default function Second({
           onClick={() => setShowInfo(true)}
           whileTap={{ scale: 0.96 }}
           aria-label="View church details"
-          className="flex-1 mx-2 flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-2xl bg-blue-500/10 hover:bg-blue-500/20 border border-blue-400/25 transition-all cursor-pointer text-center"
+          className="flex-1 mx-2 flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-2xl bg-sky-700/50 hover:bg-sky-700/65 border border-sky-400/50 backdrop-blur-md transition-all cursor-pointer text-center shadow-sm"
         >
-          <span className="w-1.5 h-1.5 rounded-full bg-sky-400 animate-pulse shrink-0 self-center" />
-          <span className="font-malayalam text-[11px] sm:text-[12px] text-blue-100 font-semibold leading-tight text-center">
+          <span className="w-1.5 h-1.5 rounded-full bg-sky-300 animate-pulse shrink-0 self-center" />
+          <span className="font-malayalam text-[11px] sm:text-[12px] text-white font-bold leading-tight text-center drop-shadow-[0_1px_2px_rgba(0,0,0,0.5)]">
             {churchName}
           </span>
-          <Info className="w-3 h-3 text-blue-300/80 shrink-0 self-center ml-0.5" />
+          <Info className="w-3 h-3 text-sky-200 shrink-0 self-center ml-0.5" />
         </motion.button>
 
         {/* Cathedral Church Bell Button */}
@@ -345,7 +331,7 @@ export default function Second({
           onClick={ringBell}
           whileTap={{ scale: 0.85 }}
           aria-label="Ring cathedral bell"
-          className="relative p-2 rounded-full bg-gradient-to-tr from-blue-600/25 to-sky-400/15 border border-blue-400/40 text-blue-200 hover:text-white hover:border-blue-300 transition-colors shadow-md cursor-pointer"
+          className="relative p-2 rounded-full bg-gradient-to-tr from-sky-700/60 to-sky-600/50 border border-sky-400/60 text-white hover:border-sky-300 transition-colors shadow-[0_2px_12px_rgba(3,105,161,0.35)] cursor-pointer"
         >
           <motion.span
             className="block"
@@ -360,7 +346,7 @@ export default function Second({
               initial={{ scale: 0.6, opacity: 0.9 }}
               animate={{ scale: 2.5, opacity: 0 }}
               transition={{ duration: 0.9, ease: 'easeOut' }}
-              className="absolute inset-0 rounded-full border-2 border-sky-400 pointer-events-none"
+              className="absolute inset-0 rounded-full border-2 border-sky-300 pointer-events-none"
             />
           )}
         </motion.button>
@@ -372,44 +358,29 @@ export default function Second({
           initial={{ opacity: 0, y: -8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1, duration: 0.5 }}
-          className="font-malayalam font-medium text-blue-50 text-center text-xs sm:text-[13px] leading-relaxed drop-shadow-[0_2px_12px_rgba(0,0,0,0.95)] max-w-[340px]"
+          className="font-malayalam font-bold text-white text-center text-xs sm:text-[13px] leading-relaxed drop-shadow-[0_2px_10px_rgba(0,0,0,0.9)] max-w-[340px]"
         >
-          നിന്റെ സമർപ്പണവും പ്രാർത്ഥനയും ദൈവസന്നിധിയിൽ സ്മരിക്കപ്പെട്ടിരിക്കുന്നു
+          നിങ്ങളുടെ നേർച്ചയും പ്രാർത്ഥനയും ദൈവസന്നിധിയിൽ സ്മരിക്കപ്പെട്ടിരിക്കുന്നു
         </motion.p>
       </div>
 
-      {/* 3. Center Wooden Nerchapetti Box */}
+      {/* 3. Center Ornate Gold & Marble Church Offering Box */}
       <motion.div
         initial={{ opacity: 0, scale: 0.94, y: 10 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         transition={{ duration: 0.6, ease: 'easeOut', delay: 0.2 }}
-        className="relative z-30 my-auto w-52 sm:w-56 shrink-0"
+        className="relative z-30 my-auto w-48 sm:w-52 shrink-0"
       >
         <motion.div ref={boxRef} animate={boxAnim} className="relative">
-          {/* Offering already settled */}
-          <AnimatePresence>
-            {placed.map((p) => (
-              <motion.img
-                key={p.id}
-                src={p.src}
-                alt=""
-                initial={{ opacity: 0, y: -26, scale: 0.5, rotate: -25 }}
-                animate={{ opacity: 0.9, y: p.y, scale: 1, rotate: p.r }}
-                transition={{ duration: 0.55, ease: 'easeOut' }}
-                className="absolute left-1/2 -translate-x-1/2 top-4 w-7 h-7 object-contain pointer-events-none"
-              />
-            ))}
-          </AnimatePresence>
-
-          {/* Authentic Carved Wooden Nerchapetti Chest */}
+          {/* Ornate Gold & Marble Church Offering Box */}
           <NerchapettiBox slotGlow={slotGlow} />
         </motion.div>
       </motion.div>
 
       {/* 4. Running Total Display */}
       <div className="relative z-10 w-full my-auto flex items-center justify-center gap-2.5 shrink-0">
-        <span className="font-malayalam text-xs text-blue-200/90 font-medium">ആകെ സമർപ്പണം</span>
-        <div className="relative h-7 overflow-hidden min-w-[88px] px-3.5 flex items-center justify-center rounded-full bg-slate-950/75 border border-blue-400/40 backdrop-blur-md shadow-[0_0_18px_rgba(37,99,235,0.25)]">
+        <span className="font-malayalam text-xs text-sky-100 font-bold drop-shadow-[0_1px_2px_rgba(0,0,0,0.6)]">ആകെ സമർപ്പണം</span>
+        <div className="relative h-7 overflow-hidden min-w-[88px] px-3.5 flex items-center justify-center rounded-full bg-sky-700/50 border border-sky-400/60 backdrop-blur-md shadow-[0_4px_18px_rgba(3,105,161,0.4)]">
           <AnimatePresence mode="popLayout" initial={false}>
             <motion.span
               key={amount}
@@ -419,7 +390,7 @@ export default function Second({
               transition={{ duration: 0.24, ease: 'easeOut' }}
               className="absolute inset-0 flex items-center justify-center gap-1 font-cinzel font-bold text-base text-white tabular-nums"
             >
-              <span className="text-xs text-blue-300">₹</span>
+              <span className="text-xs text-sky-200">₹</span>
               {amount}
             </motion.span>
           </AnimatePresence>
@@ -428,7 +399,7 @@ export default function Second({
 
       {/* 5. Coins Section */}
       <div className="relative z-10 w-full mt-1 shrink-0 px-1">
-        <Label className="font-malayalam text-blue-200/80 mb-1.5">നാണയങ്ങൾ · Coins</Label>
+        <Label className="font-malayalam text-sky-100 font-bold drop-shadow-[0_1px_2px_rgba(0,0,0,0.6)] mb-1.5">നാണയങ്ങൾ · Coins</Label>
         <div className="grid grid-cols-5 gap-1.5 px-1">
           {COINS.map((value, i) => (
             <motion.button
@@ -440,7 +411,7 @@ export default function Second({
               onClick={(e) => placeOffering(value, e)}
               disabled={paying}
               aria-label={`Offer ${value} rupee coin`}
-              className={`mx-auto w-full max-w-[48px] focus:outline-none focus-visible:ring-1 focus-visible:ring-blue-300 rounded-full transition-opacity ${
+              className={`mx-auto w-full max-w-[48px] focus:outline-none focus-visible:ring-1 focus-visible:ring-sky-300 rounded-full transition-opacity ${
                 paying ? 'opacity-40 cursor-not-allowed' : 'cursor-pointer'
               }`}
             >
@@ -452,7 +423,7 @@ export default function Second({
 
       {/* 6. Notes Section */}
       <div className="relative z-10 w-full mt-2 shrink-0 px-1">
-        <Label className="font-malayalam text-blue-200/80 mb-1.5">നോട്ടുകൾ · Notes</Label>
+        <Label className="font-malayalam text-sky-100 font-bold drop-shadow-[0_1px_2px_rgba(0,0,0,0.6)] mb-1.5">നോട്ടുകൾ · Notes</Label>
         <div className="grid grid-cols-2 gap-2.5 px-0.5">
           {NOTES.map((value, i) => (
             <motion.button
@@ -464,7 +435,7 @@ export default function Second({
               onClick={(e) => placeOffering(value, e)}
               disabled={paying}
               aria-label={`Offer ${value} rupee note`}
-              className={`mx-auto w-full max-w-[125px] flex items-center justify-center focus:outline-none focus-visible:ring-1 focus-visible:ring-blue-300 rounded-md transition-opacity ${
+              className={`mx-auto w-full max-w-[125px] flex items-center justify-center focus:outline-none focus-visible:ring-1 focus-visible:ring-sky-300 rounded-md transition-opacity ${
                 paying ? 'opacity-40 cursor-not-allowed' : 'cursor-pointer'
               }`}
             >
@@ -482,10 +453,10 @@ export default function Second({
           whileTap={amount === 0 || paying ? undefined : { scale: 0.97 }}
           className={`w-full py-2.5 px-6 rounded-2xl font-malayalam text-base border transition-all duration-300 flex items-center justify-center gap-2 ${
             paying
-              ? 'bg-gradient-to-r from-blue-600/80 via-blue-500/80 to-indigo-600/80 text-white font-semibold border-blue-300/40 cursor-wait'
+              ? 'bg-gradient-to-r from-sky-500/80 via-sky-400/80 to-blue-500/80 text-white font-bold border-sky-300/40 cursor-wait'
               : amount > 0
-                ? 'bg-gradient-to-r from-blue-600 via-sky-500 to-indigo-600 text-white font-semibold shadow-[0_8px_25px_rgba(37,99,235,0.45)] border-sky-300/50 cursor-pointer'
-                : 'bg-blue-500/15 text-blue-200/40 border-blue-400/15 cursor-not-allowed'
+                ? 'bg-gradient-to-r from-sky-500 via-sky-400 to-blue-600 text-white font-bold shadow-[0_8px_25px_rgba(14,165,233,0.5)] border-sky-200/70 cursor-pointer'
+                : 'bg-sky-500/20 text-sky-100/50 border-sky-300/25 cursor-not-allowed'
           }`}
         >
           {paying ? (

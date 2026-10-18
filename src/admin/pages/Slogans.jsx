@@ -60,7 +60,7 @@ export default function Slogans() {
             <div className="space-y-3">
               <TextInput
                 label="Offering Banner Verse (Malayalam)"
-                defaultValue="നിന്റെ സമർപ്പണവും പ്രാർത്ഥനയും ദൈവസന്നിധിയിൽ സ്മരിക്കപ്പെട്ടിരിക്കുന്നു"
+                defaultValue="നിങ്ങളുടെ നേർച്ചയും പ്രാർത്ഥനയും ദൈവസന്നിധിയിൽ സ്മരിക്കപ്പെട്ടിരിക്കുന്നു"
                 className="[&_input]:font-malayalam"
                 hint="Acts 10:4 — displayed above the wooden Nerchapetti."
               />

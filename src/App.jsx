@@ -3,7 +3,7 @@ import { AnimatePresence } from 'framer-motion';
 import First from './Home/First';
 import Second from './Home/Second';
 import Third from './Home/Third';
-import RoseWindow from './components/RoseWindow';
+import CathedralAura from './components/CathedralAura';
 import { preloadAssets } from './utils/preload';
 import './App.css';
 
@@ -34,39 +34,39 @@ export default function App() {
   const Current = STEPS[step].component;
 
   return (
-    <main className="h-[100dvh] max-h-[100dvh] sm:h-screen sm:min-h-screen w-full flex flex-col items-center justify-center p-0 sm:p-2 md:p-3 relative selection:bg-blue-500 selection:text-white overflow-hidden bg-slate-950 sm:bg-slate-900">
-      {/* Background ambient lighting on desktop viewport */}
-      <div className="hidden sm:block fixed top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[550px] bg-blue-600/20 rounded-full blur-3xl pointer-events-none" />
-      <div className="hidden sm:block fixed bottom-10 left-1/2 -translate-x-1/2 w-80 h-80 bg-sky-500/15 rounded-full blur-3xl pointer-events-none" />
-
+    <main className="h-[100dvh] max-h-[100dvh] sm:h-screen sm:min-h-screen w-full flex flex-col items-center justify-center p-0 sm:p-2 md:p-3 relative selection:bg-blue-500 selection:text-white overflow-hidden bg-slate-950 sm:bg-white">
       {/* Main Kiosk Container */}
-      <div className="relative w-full sm:max-w-[400px] mx-auto h-[100dvh] max-h-[100dvh] sm:h-[min(844px,96vh)] sm:max-h-[860px] flex flex-col justify-between items-center overflow-hidden rounded-none sm:rounded-[32px] border-0 sm:border sm:border-blue-400/30 shadow-none sm:shadow-[0_15px_60px_rgba(0,0,0,0.9),0_0_50px_rgba(37,99,235,0.25)] bg-slate-950 z-10">
+      <div className="relative w-full sm:max-w-[400px] mx-auto h-[100dvh] max-h-[100dvh] sm:h-[min(844px,96vh)] sm:max-h-[860px] flex flex-col justify-between items-center overflow-hidden rounded-none sm:rounded-[32px] border-0 sm:border-2 sm:border-slate-800/80 shadow-none sm:shadow-[0_25px_60px_-15px_rgba(0,0,0,0.35),0_10px_30px_rgba(0,0,0,0.15)] bg-slate-950 z-10">
         
-        {/* 1. Deep Midnight Cathedral Blue Background with Radial Aura */}
-        <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-[#020617] via-[#0b1329] to-[#030712] z-0">
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(37,99,235,0.22)_0%,transparent_60%)]" />
+        {/* 1. Cathedral Sanctuary Background Image (public/bg.jpg) */}
+        <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
+          <img
+            src="/bg.jpg"
+            alt="Cathedral Sanctuary"
+            className="w-full h-full object-cover object-center select-none"
+          />
+          {/* Soft atmospheric sky-tinted vignette to highlight radiant stained glass & altar */}
+          <div className="absolute inset-0 bg-gradient-to-b from-sky-950/30 via-transparent to-sky-950/45 pointer-events-none" />
         </div>
 
-        {/* 2. Persistent Gothic Cathedral Rose Window (Slow Majestic Spin) */}
-        <div className="absolute inset-0 pointer-events-none flex items-center justify-center sanctuary-aura z-0">
-          <RoseWindow className="w-[430px] h-[430px] sm:w-[530px] sm:h-[530px] opacity-40 drop-shadow-[0_0_35px_rgba(56,189,248,0.3)]" />
-        </div>
+        {/* 2. Sacred Cathedral Aura (Volumetric Divine Sunbeams & Liturgical Cross Halo) */}
+        <CathedralAura />
 
         {/* 3. Floating Celestial Starlight Particles */}
         <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
-          {[...Array(7)].map((_, i) => (
+          {[...Array(6)].map((_, i) => (
             <div
               key={i}
-              className="absolute text-blue-200 select-none pointer-events-none starlight-particle transform-gpu"
+              className="absolute text-amber-200/70 select-none pointer-events-none starlight-particle transform-gpu"
               style={{
-                top: `${12 + i * 11}%`,
+                top: `${12 + i * 13}%`,
                 left: `${8 + ((i * 17) % 84)}%`,
-                '--dur': `${3.5 + i * 0.6}s`,
+                '--dur': `${3.8 + i * 0.7}s`,
                 '--del': `${i * 0.35}s`,
               }}
             >
-              <svg viewBox="0 0 16 16" className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-sky-200" fill="currentColor">
-                <path d="M8 0L9.5 6.5L16 8L9.5 9.5L8 16L6.5 9.5L0 8L6.5 6.5L8 0Z" opacity="0.75" />
+              <svg viewBox="0 0 16 16" className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-amber-100" fill="currentColor">
+                <path d="M8 0L9.5 6.5L16 8L9.5 9.5L8 16L6.5 9.5L0 8L6.5 6.5L8 0Z" opacity="0.7" />
               </svg>
             </div>
           ))}

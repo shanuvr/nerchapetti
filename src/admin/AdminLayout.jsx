@@ -33,7 +33,7 @@ export default function AdminLayout() {
               <span className="font-malayalam font-bold text-slate-800">നേർച്ചപ്പെട്ടി</span> Parish Console ·{' '}
               <span className="text-blue-700 font-semibold font-sans">v1.0 Production</span>
             </p>
-            <p className="font-malayalam text-slate-600 font-medium">സ്തോത്രക്കാഴ്ച by Programers</p>
+            <p className="font-malayalam text-slate-600 font-medium">നേർച്ചപ്പെട്ടി by Programmers</p>
           </div>
         </footer>
       </div>

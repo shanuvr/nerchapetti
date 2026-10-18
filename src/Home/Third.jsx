@@ -1,8 +1,6 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowLeft, Church, Share2, Volume2, VolumeX, Maximize2, X, Play, HeartHandshake } from 'lucide-react';
-import CrossAura from '../components/CrossAura';
-import AltarCandle from '../components/AltarCandle';
+import { ArrowLeft, Church, Share2, Volume2, VolumeX, Maximize2, X, HeartHandshake } from 'lucide-react';
 
 /* Church collection UPI handle */
 const CHURCH_UPI_ID = 'stmaryscathedral@upi';
@@ -23,10 +21,42 @@ const formatStamp = (d) =>
     hour12: true,
   });
 
+const BIBLE_VERSES = [
+  {
+    id: 1,
+    ref: 'സുഭാഷിതങ്ങൾ 3:9-10',
+    ml: 'നിന്റെ ധനംകൊണ്ടും നിന്റെ എല്ലാ വരുമാനത്തിന്റെ ആദ്യഫലംകൊണ്ടും യഹോവയെ ബഹുമാനിക്കുക; അപ്പോൾ നിന്റെ കളപ്പുരകൾ സമൃദ്ധിയായി നിറയും.',
+  },
+  {
+    id: 2,
+    ref: '2 കോറിന്തോസ് 9:7-8',
+    ml: 'സന്തോഷത്തോടെ കൊടുക്കുന്നവനെ ദൈവം സ്നേഹിക്കുന്നു; നിങ്ങളുടെ എല്ലാ ആവശ്യങ്ങളിലും അവിടുത്തെ കൃപ സമൃദ്ധമായി നൽകാൻ ദൈവം ശക്തനാണ്.',
+  },
+  {
+    id: 3,
+    ref: 'ലൂക്കോസ് 6:38',
+    ml: 'കൊടുക്കുവിൻ; എന്നാൽ നിങ്ങൾക്കും ലഭിക്കും; അമർത്തി കുലുക്കി കവിഞ്ഞൊഴുകുന്ന നല്ലൊരു അളവ് നിങ്ങളുടെ മടിയിൽ അളന്നു തരും.',
+  },
+  {
+    id: 4,
+    ref: 'മലാഖി 3:10',
+    ml: 'എന്റെ ആലയത്തിൽ ആഹാരം ഉണ്ടാകേണ്ടതിന് ദശാംശമൊക്കെയും ഭണ്ഡാരത്തിലേക്ക് കൊണ്ടുവരുവിൻ; ഞാൻ ആകാശത്തിന്റെ കിളിവാതിലുകളെ തുറന്നു അനുഗ്രഹം ചൊരിഞ്ഞുതരുമോ എന്ന് എന്നെ പരീക്ഷിച്ചുനോക്കുവിൻ.',
+  },
+  {
+    id: 5,
+    ref: 'സങ്കീർത്തനങ്ങൾ 128:1-3',
+    ml: 'യഹോവയെ ഭയപ്പെട്ട് അവന്റെ വഴികളിൽ നടക്കുന്ന ഏവനും ഭാഗ്യവാൻ. നിന്റെ കൈകളുടെ അധ്വാനഫലം നീ തിന്നും; നിന്റെ കുടുംബത്തിൽ കർത്താവിന്റെ അനുഗ്രഹം നിറയും.',
+  },
+  {
+    id: 6,
+    ref: 'സങ്കീർത്തനം 20:3-4',
+    ml: 'അവിടുന്ന് നിന്റെ സമർപ്പണങ്ങളെല്ലാം ഓർത്തു നിന്റെ വഴിപാടുകളെ കൈക്കൊള്ളുമാറാകട്ടെ; നിന്റെ ഹൃദയത്തിലെ ആഗ്രഹങ്ങളെല്ലാം അവിടുന്ന് സാധിപ്പിച്ചുതരട്ടെ.',
+  },
+];
+
 /**
  * Sanctuary Altar Blessing Card
- * Provides an inspiring altar visual with sound toggle and video expansion support.
- * (Ready for future video file/stream insertion as planned)
+ * Features continuous auto-scrolling scripture slogans.
  */
 function SanctuaryAltarCard({ onExpand, churchName }) {
   const [isMuted, setIsMuted] = useState(true);
@@ -37,19 +67,16 @@ function SanctuaryAltarCard({ onExpand, churchName }) {
   };
 
   return (
-    <div className="relative w-full h-full flex flex-col items-center overflow-hidden rounded-2xl bg-slate-950 border border-blue-400/40 shadow-[inset_0_1px_0_rgba(255,255,255,0.2),0_8px_24px_rgba(0,0,0,0.8)] backdrop-blur-md">
+    <div className="relative w-full h-full flex flex-col items-center overflow-hidden rounded-2xl bg-slate-950 border border-sky-400/40 shadow-[inset_0_1px_0_rgba(255,255,255,0.2),0_8px_24px_rgba(0,0,0,0.8)] backdrop-blur-md">
       {/* Top Header Row */}
-      <div className="w-full z-30 flex items-center justify-between px-3 py-1.5 bg-slate-950/95 border-b border-blue-400/30 shrink-0">
+      <div className="w-full z-30 flex items-center justify-between px-3.5 py-2 bg-slate-950/95 border-b border-sky-400/30 shrink-0">
         <div className="flex items-center gap-1.5">
           <span className="relative flex h-2 w-2">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75" />
             <span className="relative inline-flex rounded-full h-2 w-2 bg-sky-400" />
           </span>
-          <span className="font-malayalam text-[10.5px] sm:text-[11.5px] font-bold text-blue-100 tracking-wide">
-            വിശുദ്ധ മദ്ബഹ ദർശനം
-          </span>
-          <span className="text-[8px] uppercase tracking-wider text-blue-300/80 font-medium">
-            · Holy Sanctuary
+          <span className="font-malayalam text-[11px] sm:text-xs font-bold text-sky-100 tracking-wide">
+            വിശുദ്ധ ബൈബിൾ സന്ദേശങ്ങൾ
           </span>
         </div>
 
@@ -58,15 +85,15 @@ function SanctuaryAltarCard({ onExpand, churchName }) {
           onClick={toggleSound}
           type="button"
           aria-label={isMuted ? 'Turn Sound On' : 'Turn Sound Off'}
-          className={`flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[9px] font-semibold border transition-all cursor-pointer ${
+          className={`flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[8.5px] sm:text-[9px] font-semibold border transition-all cursor-pointer ${
             !isMuted
-              ? 'bg-blue-500/25 border-blue-300 text-blue-200 shadow-[0_0_8px_rgba(59,130,246,0.4)]'
-              : 'bg-slate-900/90 border-blue-400/40 text-slate-300 hover:text-blue-200'
+              ? 'bg-sky-500/25 border-sky-300 text-sky-100 shadow-[0_0_8px_rgba(56,189,248,0.4)]'
+              : 'bg-slate-900/90 border-sky-400/40 text-slate-300 hover:text-sky-200'
           }`}
         >
           {!isMuted ? (
             <>
-              <Volume2 className="w-2.5 h-2.5 text-blue-300" />
+              <Volume2 className="w-2.5 h-2.5 text-sky-300" />
               <span>Sound ON</span>
             </>
           ) : (
@@ -78,67 +105,72 @@ function SanctuaryAltarCard({ onExpand, churchName }) {
         </button>
       </div>
 
-      {/* Main Sanctuary Altar Visual (Luminous Altar Art & Atmosphere) */}
-      <div className="relative w-full flex-1 min-h-0 overflow-hidden bg-gradient-to-b from-slate-900 via-blue-950/80 to-slate-950 flex flex-col items-center justify-center p-4">
+      {/* Main Sanctuary Visual: Continuous Upward Scrolling Slogans */}
+      <div className="relative w-full flex-1 min-h-0 overflow-hidden bg-gradient-to-b from-slate-950 via-slate-900/95 to-slate-950 flex flex-col select-none">
         {/* Divine Background Rays */}
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(56,189,248,0.2)_0%,transparent_70%)] pointer-events-none" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(56,189,248,0.14)_0%,transparent_75%)] pointer-events-none" />
 
-        {/* Altar Presentation */}
-        <div className="relative flex items-center justify-center gap-3">
-          <AltarCandle height={54} />
-          <div className="relative w-24 h-24 sm:w-28 sm:h-28 flex items-center justify-center">
-            <CrossAura className="w-full h-full drop-shadow-[0_0_24px_rgba(56,189,248,0.7)]" />
-          </div>
-          <AltarCandle height={54} />
+        {/* Top Gradient Fade Overlay */}
+        <div className="absolute top-0 inset-x-0 h-10 bg-gradient-to-b from-slate-950 via-slate-950/80 to-transparent pointer-events-none z-20" />
+
+        {/* Bottom Gradient Fade Overlay */}
+        <div className="absolute bottom-0 inset-x-0 h-12 bg-gradient-to-t from-slate-950 via-slate-950/90 to-transparent pointer-events-none z-20" />
+
+        {/* Continuous Upward Scrolling Slogans */}
+        <div className="w-full flex flex-col items-center px-3 pt-6 pb-4 bible-news-crawl">
+          {[...BIBLE_VERSES, ...BIBLE_VERSES].map((verse, i) => (
+            <div
+              key={`${verse.id}-${i}`}
+              className="w-full flex flex-col items-center text-center my-3 transition-opacity duration-300"
+            >
+              {/* Reference Pill Badge */}
+              <div className="flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-amber-400/15 border border-amber-300/45 shadow-[0_2px_10px_rgba(245,195,88,0.15)] mb-2.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" />
+                <span className="font-malayalam text-[10.5px] font-bold text-amber-200">{verse.ref}</span>
+              </div>
+
+              {/* Malayalam Scripture Passage */}
+              <p className="font-malayalam text-[12.5px] sm:text-[13.5px] text-white font-semibold leading-relaxed px-2 drop-shadow-[0_2px_10px_rgba(0,0,0,0.95)] max-w-[340px]">
+                &ldquo;{verse.ml}&rdquo;
+              </p>
+
+              {/* Liturgical Golden Cross Divider */}
+              <div className="flex items-center justify-center gap-2 mt-4 mb-2 text-amber-300/60 w-36">
+                <span className="h-[1px] flex-1 bg-gradient-to-r from-transparent to-amber-300/60" />
+                <span className="text-xs">✝</span>
+                <span className="h-[1px] flex-1 bg-gradient-to-l from-transparent to-amber-300/60" />
+              </div>
+            </div>
+          ))}
         </div>
 
-        <p className="relative font-malayalam text-[11px] font-semibold text-blue-100 text-center mt-2 drop-shadow-sm">
-          &ldquo;കർത്താവിന്റെ അനുഗ്രഹം നിങ്ങളുടെ കുടുംബത്തിൽ നിറയട്ടെ&rdquo;
-        </p>
-
-        {/* Bottom Floating Bar */}
-        <div className="absolute bottom-2 inset-x-2 z-30 flex items-center justify-between">
-          <button
-            onClick={toggleSound}
-            type="button"
-            className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-950/80 border border-blue-400/50 text-blue-200 text-[10px] font-malayalam font-semibold backdrop-blur-md shadow-lg active:scale-95 transition-all cursor-pointer"
-          >
-            {!isMuted ? (
-              <>
-                <Volume2 className="w-3.5 h-3.5 text-blue-300" />
-                <span>സ്തോത്രഗീതം ഓൺ</span>
-              </>
-            ) : (
-              <>
-                <VolumeX className="w-3.5 h-3.5 text-blue-300" />
-                <span>സ്തോത്രഗീതം ഓഫ്</span>
-              </>
-            )}
-          </button>
-
-          {onExpand && (
+        {/* Optional Expand Fullscreen Button */}
+        {onExpand && (
+          <div className="absolute bottom-2 right-2 z-30 pointer-events-auto">
             <button
-              onClick={() =>
+              onClick={(e) => {
+                e.stopPropagation();
                 onExpand({
-                  title: 'സെന്റ് മേരീസ് കത്തീഡ്രൽ മദ്ബഹ · Holy Sanctuary',
-                  desc: 'Blessed sanctuary altar view and thanksgiving prayer offering.',
-                  initialMuted: isMuted,
-                })
-              }
+                  title: 'വിശുദ്ധ തിരുവചന സൂക്തങ്ങൾ',
+                  desc: 'നേർച്ച സമർപ്പണത്തിനും അനുഗ്രഹങ്ങൾക്കുമായുള്ള വിശുദ്ധ തിരുവചനങ്ങൾ.',
+                  verses: BIBLE_VERSES,
+                });
+              }}
               type="button"
-              aria-label="Expand Sanctuary View"
-              className="p-1.5 rounded-full bg-slate-950/80 border border-blue-400/50 text-blue-200 hover:text-white backdrop-blur-md shadow-lg active:scale-95 transition-all cursor-pointer"
+              aria-label="Expand Verses"
+              className="p-1.5 rounded-full bg-slate-950/80 border border-sky-400/35 text-sky-200 hover:text-white backdrop-blur-md shadow-lg active:scale-95 transition-all cursor-pointer"
             >
               <Maximize2 className="w-3.5 h-3.5" />
             </button>
-          )}
-        </div>
+          </div>
+        )}
       </div>
     </div>
   );
 }
 
-/** Expanded Sanctuary Modal */
+
+/** Expanded Scripture Verses Modal */
 function SanctuaryModal({ item, onClose }) {
   if (!item) return null;
 
@@ -156,28 +188,46 @@ function SanctuaryModal({ item, onClose }) {
         initial={{ scale: 0.95, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         exit={{ scale: 0.95, opacity: 0 }}
-        className="relative w-full max-w-[380px] flex flex-col rounded-3xl overflow-hidden bg-slate-950 border border-blue-400/50 shadow-[0_20px_60px_rgba(0,0,0,0.9),0_0_40px_rgba(37,99,235,0.3)] p-4 text-center z-10"
+        className="relative w-full max-w-[390px] max-h-[85vh] flex flex-col rounded-3xl overflow-hidden bg-slate-950 border border-sky-400/50 shadow-[0_20px_60px_rgba(0,0,0,0.9),0_0_40px_rgba(56,189,248,0.3)] p-4 text-center z-10"
       >
-        <div className="flex items-center justify-between mb-2 shrink-0">
-          <span className="font-cinzel text-xs font-bold text-blue-200 tracking-wider">Sanctuary Darshan</span>
+        <div className="flex items-center justify-between mb-2 shrink-0 border-b border-sky-400/20 pb-2">
+          <div className="flex items-center gap-1.5 text-left">
+            <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
+            <div>
+              <p className="font-malayalam text-xs font-bold text-sky-100">{item.title}</p>
+              <p className="text-[8.5px] text-sky-300/70 font-malayalam">{item.desc}</p>
+            </div>
+          </div>
           <button
             onClick={onClose}
             aria-label="Close"
-            className="p-1.5 rounded-full bg-white/10 hover:bg-white/20 text-slate-300 hover:text-blue-200 transition-colors cursor-pointer"
+            className="p-1.5 rounded-full bg-white/10 hover:bg-white/20 text-slate-300 hover:text-sky-200 transition-colors cursor-pointer"
           >
             <X className="w-4 h-4" />
           </button>
         </div>
 
-        <div className="w-full min-h-[220px] rounded-2xl overflow-hidden border border-blue-400/30 bg-gradient-to-b from-slate-900 to-blue-950 flex flex-col items-center justify-center p-5 mb-3">
-          <CrossAura className="w-24 h-24 drop-shadow-[0_0_30px_rgba(59,130,246,0.8)] mb-2" />
-          <p className="font-malayalam text-sm font-bold text-white mb-1">{item.title}</p>
-          <p className="text-xs text-slate-300">{item.desc}</p>
+        {/* Scrollable list of all verses */}
+        <div className="w-full flex-1 overflow-y-auto space-y-3 pr-1 py-1 text-left custom-scrollbar">
+          {(item.verses || BIBLE_VERSES).map((verse) => (
+            <div
+              key={verse.id}
+              className="p-3 rounded-2xl bg-slate-900/80 border border-sky-400/30 shadow-xs"
+            >
+              <div className="flex items-center justify-between mb-1.5">
+                <span className="font-malayalam text-[11px] font-bold text-amber-200">{verse.ref}</span>
+                <span className="text-xs text-amber-300/60">✝</span>
+              </div>
+              <p className="font-malayalam text-[12px] text-sky-100 leading-relaxed">
+                &ldquo;{verse.ml}&rdquo;
+              </p>
+            </div>
+          ))}
         </div>
 
         <button
           onClick={onClose}
-          className="w-full py-2 rounded-xl bg-gradient-to-r from-blue-600 via-sky-500 to-indigo-600 text-white font-semibold font-malayalam text-xs cursor-pointer active:scale-95 transition-transform"
+          className="w-full mt-3 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 via-sky-500 to-indigo-600 text-white font-semibold font-malayalam text-xs cursor-pointer active:scale-95 transition-transform shrink-0"
         >
           ശരി / Close
         </button>
@@ -253,7 +303,7 @@ function SuccessDialog({ amount, churchName, receipt, paidAt, onViewSanctuary, o
         </div>
 
         <p className="relative font-malayalam text-lg text-white font-bold drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
-          സ്തോത്രക്കാഴ്ച സ്വീകരിക്കപ്പെട്ടു
+          നിങ്ങളുടെ നേർച്ച സ്വീകരിക്കപ്പെട്ടു
         </p>
         <p className="relative mt-0.5 text-[9px] uppercase tracking-[0.3em] text-sky-400 font-semibold">
           Offering Received & Blessed
@@ -265,23 +315,23 @@ function SuccessDialog({ amount, churchName, receipt, paidAt, onViewSanctuary, o
         </div>
         <p className="relative mt-1 px-2 font-malayalam text-[11px] leading-snug text-blue-200/90">{churchName}</p>
 
-        <div className="relative mt-3 rounded-xl bg-slate-950/60 border border-blue-400/25 px-3 py-2">
-          <p className="text-[8.5px] uppercase tracking-[0.2em] text-blue-200/60 font-medium">Receipt No.</p>
-          <p className="text-[11px] font-semibold tracking-wide text-white">{receipt}</p>
-          <p className="mt-0.5 text-[9px] text-blue-200/60">{formatStamp(paidAt)}</p>
+        <div className="relative mt-3 rounded-xl bg-sky-500/25 border border-sky-300/45 px-3 py-2 backdrop-blur-md">
+          <p className="text-[8.5px] uppercase tracking-[0.2em] text-sky-200 font-semibold">Receipt No.</p>
+          <p className="text-[11px] font-bold tracking-wide text-white drop-shadow-sm">{receipt}</p>
+          <p className="mt-0.5 text-[9px] text-sky-200/80">{formatStamp(paidAt)}</p>
         </div>
 
         <div className="relative mt-4 flex flex-col gap-2">
           <motion.button
             whileTap={{ scale: 0.97 }}
             onClick={onViewSanctuary}
-            className="w-full py-2.5 rounded-xl bg-gradient-to-r from-blue-600 via-sky-500 to-indigo-600 text-white font-semibold font-malayalam text-sm cursor-pointer shadow-[0_4px_16px_rgba(37,99,235,0.4)] transition-transform"
+            className="w-full py-2.5 rounded-xl bg-gradient-to-r from-sky-500 via-sky-400 to-blue-600 text-white font-bold font-malayalam text-sm cursor-pointer shadow-[0_4px_16px_rgba(14,165,233,0.45)] border border-sky-200/60 transition-transform"
           >
             മദ്ബഹ ദർശനം കാണുക
           </motion.button>
           <button
             onClick={onReset}
-            className="w-full py-2.5 rounded-xl bg-blue-500/10 border border-blue-400/30 text-blue-200 font-malayalam font-semibold text-xs sm:text-[13px] cursor-pointer transition-colors hover:bg-blue-500/20 active:scale-95"
+            className="w-full py-2.5 rounded-xl bg-sky-500/20 border border-sky-300/40 text-white font-malayalam font-bold text-xs sm:text-[13px] cursor-pointer transition-colors hover:bg-sky-500/35 active:scale-95 shadow-sm"
           >
             മറ്റൊരു സമർപ്പണം
           </button>
@@ -343,9 +393,6 @@ export default function Third({
         >
           <ArrowLeft className="w-4 h-4" />
         </button>
-        <span className="text-[10px] uppercase tracking-[0.3em] text-blue-200 font-semibold drop-shadow-[0_1px_4px_rgba(0,0,0,0.9)]">
-          Thanksgiving
-        </span>
         <div className="w-8 sm:w-9 flex justify-center">
           <Church className="w-4 h-4 text-sky-400" />
         </div>
@@ -359,7 +406,7 @@ export default function Third({
           transition={{ delay: 0.1, duration: 0.5 }}
           className="font-malayalam font-medium text-center text-xs sm:text-[13.5px] leading-tight text-white drop-shadow-[0_2px_12px_rgba(0,0,0,0.95)] max-w-[320px]"
         >
-          നിന്റെ സമർപ്പണം കർത്താവ് അനുഗ്രഹിക്കട്ടെ
+          കർത്താവ് നിങ്ങളെ സമൃദ്ധമായി അനുഗ്രഹിക്കട്ടെ
         </motion.p>
       </div>
 

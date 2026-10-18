@@ -1,7 +1,7 @@
 import CrossAura from '../../components/CrossAura';
 import AltarCandle from '../../components/AltarCandle';
 import NerchapettiBox from '../../components/NerchapettiBox';
-import RoseWindow from '../../components/RoseWindow';
+import CathedralAura from '../../components/CathedralAura';
 import { MONEY } from '../../data/money';
 
 const SAMPLE = {
@@ -48,7 +48,7 @@ function WelcomeMock() {
         <div className="w-28 h-[2px] rounded-full bg-blue-400/20 overflow-hidden">
           <div className="h-full w-2/3 rounded-full bg-gradient-to-r from-blue-600 via-sky-300 to-white" />
         </div>
-        <p className="text-[7px] text-blue-200/60 font-malayalam">സ്തോത്രക്കാഴ്ച · Digital Parish Console</p>
+        <p className="text-[7px] text-blue-200/60 font-malayalam">നേർച്ച സമർപ്പണം · Nerchapetti by Programmers</p>
       </div>
     </>
   );
@@ -57,6 +57,9 @@ function WelcomeMock() {
 function NerchapettiMock() {
   return (
     <>
+      {/* Gentle dark gradient from coins downwards */}
+      <div className="absolute inset-x-0 bottom-0 top-[45%] pointer-events-none bg-gradient-to-b from-transparent via-slate-950/45 to-slate-950/80 z-0" />
+
       <div className="flex items-center justify-between shrink-0">
         <span className="w-5 h-5 rounded-full bg-blue-500/10 border border-blue-400/30" />
         <span className="text-[7px] uppercase tracking-[0.26em] text-blue-200">Nerchapetti</span>
@@ -65,7 +68,7 @@ function NerchapettiMock() {
 
       <div className="pt-1 text-center shrink-0">
         <p className="font-malayalam text-[8px] leading-tight text-blue-50">
-          നിന്റെ സമർപ്പണവും പ്രാർത്ഥനയും ദൈവസന്നിധിയിൽ സ്മരിക്കപ്പെട്ടിരിക്കുന്നു
+          നിങ്ങളുടെ നേർച്ചയും പ്രാർത്ഥനയും ദൈവസന്നിധിയിൽ സ്മരിക്കപ്പെട്ടിരിക്കുന്നു
         </p>
       </div>
 
@@ -105,20 +108,20 @@ function ThanksgivingMock() {
     <>
       <div className="flex items-center justify-between shrink-0">
         <span className="w-5 h-5 rounded-full bg-blue-500/10 border border-blue-400/30" />
-        <span className="text-[7px] uppercase tracking-[0.26em] text-blue-200">Thanksgiving</span>
         <span className="w-5 h-5 flex items-center justify-center text-sky-400 text-xs">†</span>
       </div>
 
       <div className="pt-1 text-center shrink-0">
-        <p className="font-malayalam text-[8px] leading-tight text-blue-50">സ്തോത്രക്കാഴ്ച സ്വീകരിക്കപ്പെട്ടു</p>
+        <p className="font-malayalam text-[8px] leading-tight text-blue-50">നിങ്ങളുടെ നേർച്ച സ്വീകരിക്കപ്പെട്ടു</p>
         <p className="mt-0.5 text-[5.5px] uppercase tracking-[0.2em] text-sky-300">Offering Blessed & Received</p>
       </div>
 
-      <div className="flex-1 min-h-0 flex items-center justify-center">
-        <div className="relative w-24 h-24 flex items-center justify-center">
-          <RoseWindow className="absolute inset-0 w-full h-full opacity-60" />
-          <CrossAura className="relative w-12 h-12" />
-        </div>
+      <div className="flex-1 min-h-0 flex flex-col items-center justify-center p-2 text-center rounded-xl bg-slate-950/60 border border-sky-400/25 my-1">
+        <span className="text-[6.5px] uppercase tracking-wider text-sky-300 font-bold mb-0.5">തിരുവചന ദർശനം</span>
+        <p className="font-malayalam text-[8px] font-bold text-white leading-tight">
+          &ldquo;കർത്താവിന്റെ അനുഗ്രഹം നിങ്ങളുടെ കുടുംബത്തിൽ നിറയട്ടെ&rdquo;
+        </p>
+        <span className="text-[6px] text-amber-200 mt-0.5">സങ്കീർത്തനം 128:3</span>
       </div>
 
       <div className="space-y-1.5 shrink-0">
@@ -156,7 +159,11 @@ export default function PhonePreview({ screen = 'welcome', caption }) {
         </div>
 
         {/* Ambient Screen Background */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#020617] via-[#0b1329] to-[#030712] z-0" />
+        <div className="absolute inset-0 z-0 overflow-hidden">
+          <img src="/bg.jpg" alt="" className="w-full h-full object-cover object-center select-none" />
+          <div className="absolute inset-0 bg-gradient-to-b from-sky-950/30 via-transparent to-sky-950/45" />
+        </div>
+        <CathedralAura />
 
         {/* Screen Content */}
         <div className="relative z-10 w-full h-full pt-4 flex flex-col justify-between text-white">
