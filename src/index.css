@@ -1,0 +1,83 @@
+@import "tailwindcss";
+
+@layer base {
+  html, body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    overscroll-behavior-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  body {
+    font-family: 'Outfit', sans-serif;
+  }
+}
+
+.font-cinzel {
+  font-family: 'Cinzel', serif;
+}
+
+.font-philosopher {
+  font-family: 'Philosopher', sans-serif;
+}
+
+.font-malayalam {
+  font-family: 'Noto Serif Malayalam', serif;
+}
+
+/* Cathedral Sacred Glows & Rays */
+.celestial-glow {
+  filter: drop-shadow(0 0 24px rgba(56, 189, 248, 0.45)) drop-shadow(0 0 48px rgba(37, 99, 235, 0.25));
+}
+
+.gold-sacred-glow {
+  filter: drop-shadow(0 0 20px rgba(250, 204, 21, 0.55)) drop-shadow(0 0 40px rgba(217, 119, 6, 0.3));
+}
+
+.sanctuary-aura {
+  background: radial-gradient(circle at center, rgba(56, 189, 248, 0.16) 0%, rgba(30, 58, 138, 0.08) 45%, transparent 70%);
+}
+
+.rose-window-spin {
+  transform-origin: center center;
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+  animation: spinSlow 65s linear infinite;
+}
+
+/* Realistic Church Candle Flame Animation */
+.candle-flicker {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  will-change: transform, opacity;
+  transform: translate3d(0, 0, 0);
+  animation: flameFlicker 2.4s ease-in-out infinite alternate;
+}
+
+@keyframes spinSlow {
+  from { transform: rotate(0deg) translate3d(0, 0, 0); }
+  to { transform: rotate(360deg) translate3d(0, 0, 0); }
+}
+
+@keyframes flameFlicker {
+  0% { transform: scale3d(1, 1, 1) skewX(0deg); opacity: 0.94; }
+  25% { transform: scale3d(1.04, 0.97, 1) skewX(1.5deg); opacity: 1; }
+  50% { transform: scale3d(0.97, 1.05, 1) skewX(-1.8deg); opacity: 0.89; }
+  75% { transform: scale3d(1.03, 0.98, 1) skewX(1.1deg); opacity: 1; }
+  100% { transform: scale3d(1, 1, 1) skewX(0deg); opacity: 0.94; }
+}
+
+/* Floating Starlight Particle */
+@keyframes starFloat {
+  0% { transform: translateY(0px) scale(0.85); opacity: 0.3; }
+  50% { transform: translateY(-12px) scale(1.15); opacity: 0.85; }
+  100% { transform: translateY(0px) scale(0.85); opacity: 0.3; }
+}
+
+.starlight-particle {
+  animation: starFloat var(--dur, 4s) ease-in-out infinite;
+  animation-delay: var(--del, 0s);
+}
