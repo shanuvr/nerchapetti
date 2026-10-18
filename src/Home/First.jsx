@@ -50,6 +50,9 @@ export default function First({
       onClick={handleDevotionalTap}
       className="relative w-full h-full flex flex-col justify-between items-center p-3.5 sm:p-5 text-center cursor-pointer select-none overflow-hidden transform-gpu will-change-transform"
     >
+      {/* Dark contrast scrim to ensure crisp text readability against bright background */}
+      <div className="absolute inset-0 bg-gradient-to-b from-slate-950/65 via-slate-950/45 to-slate-950/75 pointer-events-none -z-10" />
+
       {/* 1. Cathedral Header Badge */}
       <motion.div
         initial={{ y: -16, opacity: 0 }}
@@ -57,13 +60,13 @@ export default function First({
         transition={{ delay: 0.08, duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
         className="w-full flex flex-col items-center z-10 pt-0.5 shrink-0"
       >
-        <div className="flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-sky-700/60 border border-sky-400/60 shadow-[0_4px_24px_rgba(3,105,161,0.45)] backdrop-blur-md">
-          <span className="w-2 h-2 rounded-full bg-sky-300 animate-pulse" />
-          <p className="font-malayalam text-xs sm:text-[13px] font-bold text-white drop-shadow-[0_1px_3px_rgba(0,0,0,0.6)]">
+        <div className="flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-950/75 border border-sky-400/40 shadow-[0_4px_24px_rgba(0,0,0,0.7)] backdrop-blur-md">
+          <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse shadow-[0_0_8px_rgba(251,191,36,0.8)]" />
+          <p className="font-malayalam text-xs sm:text-[13px] font-bold text-white drop-shadow-[0_1px_3px_rgba(0,0,0,0.9)]">
             {churchName}
           </p>
         </div>
-        <p className="text-[9.5px] uppercase tracking-[0.22em] text-sky-100 font-semibold mt-1 drop-shadow-[0_1px_3px_rgba(0,0,0,0.7)]">
+        <p className="text-[9.5px] uppercase tracking-[0.22em] text-sky-200 font-semibold mt-1.5 drop-shadow-[0_2px_4px_rgba(0,0,0,0.95)]">
           {churchNameEn}
         </p>
       </motion.div>
@@ -74,9 +77,9 @@ export default function First({
         <div className="relative flex flex-col items-center mb-2 sm:mb-3">
           {/* Ethereal Cathedral Halo */}
           <motion.div
-            animate={{ scale: [1, 1.15, 1], opacity: [0.35, 0.7, 0.35] }}
+            animate={{ scale: [1, 1.1, 1], opacity: [0.2, 0.4, 0.2] }}
             transition={{ duration: 3.8, repeat: Infinity, ease: 'easeInOut' }}
-            className="absolute w-44 h-44 sm:w-52 sm:h-52 rounded-full bg-gradient-to-tr from-sky-500/40 via-sky-400/30 to-amber-300/30 blur-2xl pointer-events-none transform-gpu"
+            className="absolute w-44 h-44 sm:w-52 sm:h-52 rounded-full bg-gradient-to-tr from-sky-500/30 via-sky-400/20 to-amber-300/20 blur-2xl pointer-events-none transform-gpu"
           />
 
           {/* Central Medallion seating the Luminous Cross */}
@@ -113,7 +116,7 @@ export default function First({
           </div>
 
           {/* Altar Marble Pedestal */}
-          <div className="relative w-44 sm:w-52 h-4 rounded-full bg-gradient-to-r from-transparent via-sky-200/50 to-transparent blur-[1px] mt-1" />
+          <div className="relative w-44 sm:w-52 h-4 rounded-full bg-gradient-to-r from-transparent via-sky-200/40 to-transparent blur-[1px] mt-1" />
         </div>
 
         {/* Biblical Verse Badge (2 Corinthians 9:7) */}
@@ -121,30 +124,29 @@ export default function First({
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.18, duration: 0.45 }}
-          className="flex items-center justify-center px-4 py-1.5 rounded-full bg-sky-700/60 border border-sky-400/60 shadow-[0_4px_20px_rgba(3,105,161,0.4)] backdrop-blur-md mb-2 sm:mb-3"
+          className="flex items-center justify-center px-4 py-1.5 rounded-full bg-slate-950/75 border border-amber-400/40 shadow-[0_4px_20px_rgba(0,0,0,0.6)] backdrop-blur-md mb-2 sm:mb-3"
         >
-          <p className="font-malayalam text-[11px] sm:text-xs font-bold text-white drop-shadow-[0_1px_3px_rgba(0,0,0,0.6)]">
+          <p className="font-malayalam text-[11px] sm:text-xs font-semibold text-amber-200 drop-shadow-[0_1px_4px_rgba(0,0,0,0.9)]">
             &ldquo;സന്തോഷത്തോടെ കൊടുക്കുന്നവനെ ദൈവം സ്നേഹിക്കുന്നു&rdquo;
           </p>
         </motion.div>
 
-        {/* Title & Tagline */}
+        {/* Title */}
         <motion.div
           initial={{ y: 12, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.22, duration: 0.45 }}
-          className="space-y-0.5 mb-2 sm:mb-3 flex flex-col items-center"
+          className="relative mb-2 sm:mb-3 flex flex-col items-center"
         >
-          <div className="flex items-center justify-center gap-2.5">
-            <span className="h-[1.5px] w-6 sm:w-8 bg-gradient-to-r from-transparent to-sky-300" />
-            <h1 className="text-2xl sm:text-3xl font-malayalam font-extrabold text-white drop-shadow-[0_2px_14px_rgba(0,0,0,0.95)] tracking-wide">
+          {/* Ambient soft dark backing for crystal-clear title legibility */}
+          <div className="absolute inset-0 -inset-x-6 bg-slate-950/50 rounded-full blur-xl pointer-events-none" />
+          <div className="relative flex items-center justify-center gap-2.5">
+            <span className="h-[1.5px] w-6 sm:w-8 bg-gradient-to-r from-transparent to-amber-300" />
+            <h1 className="text-2xl sm:text-3xl font-malayalam font-extrabold text-white drop-shadow-[0_2px_12px_rgba(0,0,0,0.95),0_1px_3px_rgba(0,0,0,1)] tracking-wide">
               നേർച്ചപ്പെട്ടി
             </h1>
-            <span className="h-[1.5px] w-6 sm:w-8 bg-gradient-to-l from-transparent to-sky-300" />
+            <span className="h-[1.5px] w-6 sm:w-8 bg-gradient-to-l from-transparent to-amber-300" />
           </div>
-          <p className="font-cinzel text-xs sm:text-[13px] font-semibold tracking-[0.18em] text-sky-100 drop-shadow-sm uppercase">
-            Digital Church Offering Kiosk
-          </p>
         </motion.div>
 
         {/* Devotional Plaque */}
@@ -152,18 +154,18 @@ export default function First({
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.28, duration: 0.45 }}
-          className="relative px-4 py-3 sm:px-5 sm:py-3.5 max-w-[340px] w-full rounded-2xl bg-gradient-to-b from-sky-700/65 via-sky-800/60 to-blue-800/65 backdrop-blur-md border border-sky-300/50 shadow-[0_12px_32px_rgba(3,105,161,0.45),inset_0_1px_2px_rgba(255,255,255,0.35)]"
+          className="relative px-4 py-3 sm:px-5 sm:py-3.5 max-w-[340px] w-full rounded-2xl bg-gradient-to-b from-slate-900/90 via-sky-950/85 to-slate-950/90 backdrop-blur-md border border-sky-400/40 shadow-[0_12px_36px_rgba(0,0,0,0.7),inset_0_1px_2px_rgba(255,255,255,0.25)]"
         >
-          <span className="pointer-events-none absolute inset-1 rounded-xl border border-sky-200/25" />
-          <h2 className="relative font-malayalam text-xs sm:text-[13px] font-bold text-white drop-shadow-[0_1px_4px_rgba(0,0,0,0.7)] leading-relaxed">
+          <span className="pointer-events-none absolute inset-1 rounded-xl border border-sky-200/20" />
+          <h2 className="relative font-malayalam text-xs sm:text-[13px] font-bold text-white drop-shadow-[0_1px_4px_rgba(0,0,0,0.9)] leading-relaxed">
             &ldquo;കർത്താവിന്റെ ആലയത്തിലേക്കുള്ള നിങ്ങളുടെ സ്നേഹ സമർപ്പണം&rdquo;
           </h2>
 
           <div className="relative mt-2 flex justify-center">
             <motion.span
-              animate={{ opacity: [0.85, 1, 0.85] }}
+              animate={{ opacity: [0.9, 1, 0.9] }}
               transition={{ duration: 2.2, repeat: Infinity, ease: 'easeInOut' }}
-              className="px-4 py-1 rounded-full bg-sky-600/75 border border-sky-300/70 text-white font-malayalam text-[11px] font-bold shadow-[0_2px_12px_rgba(3,105,161,0.5)]"
+              className="px-4 py-1 rounded-full bg-gradient-to-r from-sky-600 via-sky-500 to-blue-600 border border-sky-300/80 text-white font-malayalam text-[11px] font-bold shadow-[0_2px_14px_rgba(2,132,199,0.5)]"
             >
               പ്രാർത്ഥനാപൂർവ്വം സമർപ്പിക്കുക
             </motion.span>
@@ -187,10 +189,10 @@ export default function First({
             transition={{ duration: FIRST_SCREEN_DURATION / 1000, ease: 'linear' }}
           />
         </div>
-        <div className="flex items-center gap-2 px-3.5 py-1 rounded-full bg-sky-700/60 border border-sky-400/50 backdrop-blur-md shadow-[0_2px_12px_rgba(3,105,161,0.35)]">
-          <span className="font-malayalam text-[11px] text-white font-bold tracking-wide drop-shadow-[0_1px_2px_rgba(0,0,0,0.5)]">നേർച്ച സമർപ്പണം</span>
-          <span className="text-sky-200 font-bold">&middot;</span>
-          <span className="text-[10px] tracking-wider text-sky-100 font-semibold drop-shadow-[0_1px_2px_rgba(0,0,0,0.5)]">Nerchapetti by Programmers</span>
+        <div className="flex items-center gap-2 px-3.5 py-1 rounded-full bg-slate-950/75 border border-sky-400/40 backdrop-blur-md shadow-[0_2px_14px_rgba(0,0,0,0.6)]">
+          <span className="font-malayalam text-[11px] text-white font-bold tracking-wide drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">നേർച്ച സമർപ്പണം</span>
+          <span className="text-sky-300 font-bold">&middot;</span>
+          <span className="text-[10px] tracking-wider text-sky-100 font-semibold drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">Nerchapetti by Programmers</span>
         </div>
       </motion.div>
     </motion.div>

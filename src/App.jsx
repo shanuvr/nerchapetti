@@ -46,7 +46,7 @@ export default function App() {
             className="w-full h-full object-cover object-center select-none"
           />
           {/* Soft atmospheric sky-tinted vignette to highlight radiant stained glass & altar */}
-          <div className="absolute inset-0 bg-gradient-to-b from-sky-950/30 via-transparent to-sky-950/45 pointer-events-none" />
+          <div className="absolute inset-0 bg-gradient-to-b from-sky-950/40 via-slate-950/25 to-sky-950/60 pointer-events-none" />
         </div>
 
         {/* 2. Sacred Cathedral Aura (Volumetric Divine Sunbeams & Liturgical Cross Halo) */}

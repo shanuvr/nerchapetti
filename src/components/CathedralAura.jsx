@@ -18,7 +18,7 @@ export default function CathedralAura({ className = '' }) {
         
         {/* 1. Volumetric God Rays (Divine Sunbeams piercing through cathedral clerestory) */}
         <div
-          className="absolute inset-0 rounded-full celestial-ray-spin opacity-55 mix-blend-screen transform-gpu will-change-transform"
+          className="absolute inset-0 rounded-full celestial-ray-spin opacity-40 mix-blend-screen transform-gpu will-change-transform"
           style={{
             background: `conic-gradient(
               from 0deg at 50% 50%,
