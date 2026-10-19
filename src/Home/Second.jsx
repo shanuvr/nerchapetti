@@ -369,11 +369,11 @@ export default function Second({
         initial={{ opacity: 0, scale: 0.94, y: 10 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         transition={{ duration: 0.6, ease: 'easeOut', delay: 0.2 }}
-        className="relative z-30 my-auto w-48 sm:w-52 shrink-0"
+        className="relative z-30 my-auto w-36 sm:w-44 max-w-[180px] max-h-[145px] sm:max-h-[175px] min-h-0 shrink"
       >
-        <motion.div ref={boxRef} animate={boxAnim} className="relative">
+        <motion.div ref={boxRef} animate={boxAnim} className="relative w-full h-full flex items-center justify-center">
           {/* Ornate Gold & Marble Church Offering Box */}
-          <NerchapettiBox slotGlow={slotGlow} />
+          <NerchapettiBox slotGlow={slotGlow} className="max-h-[145px] sm:max-h-[175px]" />
         </motion.div>
       </motion.div>
 
@@ -399,7 +399,7 @@ export default function Second({
 
       {/* 5. Coins Section */}
       <div className="relative z-10 w-full mt-1 shrink-0 px-1">
-        <Label className="font-malayalam text-sky-100 font-bold drop-shadow-[0_1px_2px_rgba(0,0,0,0.6)] mb-1.5">നാണയങ്ങൾ · Coins</Label>
+        <Label className="font-malayalam text-sky-100 font-bold drop-shadow-[0_1px_2px_rgba(0,0,0,0.6)] mb-1">നാണയങ്ങൾ · Coins</Label>
         <div className="grid grid-cols-5 gap-1.5 px-1">
           {COINS.map((value, i) => (
             <motion.button
@@ -411,7 +411,7 @@ export default function Second({
               onClick={(e) => placeOffering(value, e)}
               disabled={paying}
               aria-label={`Offer ${value} rupee coin`}
-              className={`mx-auto w-full max-w-[48px] focus:outline-none focus-visible:ring-1 focus-visible:ring-sky-300 rounded-full transition-opacity ${
+              className={`mx-auto w-full max-w-[42px] sm:max-w-[46px] focus:outline-none focus-visible:ring-1 focus-visible:ring-sky-300 rounded-full transition-opacity ${
                 paying ? 'opacity-40 cursor-not-allowed' : 'cursor-pointer'
               }`}
             >
@@ -422,9 +422,9 @@ export default function Second({
       </div>
 
       {/* 6. Notes Section */}
-      <div className="relative z-10 w-full mt-2 shrink-0 px-1">
-        <Label className="font-malayalam text-sky-100 font-bold drop-shadow-[0_1px_2px_rgba(0,0,0,0.6)] mb-1.5">നോട്ടുകൾ · Notes</Label>
-        <div className="grid grid-cols-2 gap-2.5 px-0.5">
+      <div className="relative z-10 w-full mt-1.5 shrink-0 px-1">
+        <Label className="font-malayalam text-sky-100 font-bold drop-shadow-[0_1px_2px_rgba(0,0,0,0.6)] mb-1">നോട്ടുകൾ · Notes</Label>
+        <div className="grid grid-cols-2 gap-2 px-0.5">
           {NOTES.map((value, i) => (
             <motion.button
               key={value}
@@ -435,7 +435,7 @@ export default function Second({
               onClick={(e) => placeOffering(value, e)}
               disabled={paying}
               aria-label={`Offer ${value} rupee note`}
-              className={`mx-auto w-full max-w-[125px] flex items-center justify-center focus:outline-none focus-visible:ring-1 focus-visible:ring-sky-300 rounded-md transition-opacity ${
+              className={`mx-auto w-full max-w-[115px] sm:max-w-[125px] flex items-center justify-center focus:outline-none focus-visible:ring-1 focus-visible:ring-sky-300 rounded-md transition-opacity ${
                 paying ? 'opacity-40 cursor-not-allowed' : 'cursor-pointer'
               }`}
             >
@@ -456,7 +456,7 @@ export default function Second({
               ? 'bg-gradient-to-r from-sky-500/80 via-sky-400/80 to-blue-500/80 text-white font-bold border-sky-300/40 cursor-wait'
               : amount > 0
                 ? 'bg-gradient-to-r from-sky-500 via-sky-400 to-blue-600 text-white font-bold shadow-[0_8px_25px_rgba(14,165,233,0.5)] border-sky-200/70 cursor-pointer'
-                : 'bg-sky-500/20 text-sky-100/50 border-sky-300/25 cursor-not-allowed'
+                : 'bg-slate-900/80 text-sky-200/60 border-sky-400/30 cursor-not-allowed shadow-[0_2px_10px_rgba(0,0,0,0.4)]'
           }`}
         >
           {paying ? (
@@ -465,12 +465,12 @@ export default function Second({
               <span>സമർപ്പിക്കുന്നു...</span>
             </>
           ) : (
-            <span className={amount > 0 ? '' : 'opacity-70'}>സമർപ്പിക്കുക</span>
+            <span>സമർപ്പിക്കുക</span>
           )}
         </motion.button>
 
         {/* Status line */}
-        <div className="h-4 mt-1 flex items-center justify-center">
+        <div className="h-3.5 mt-0.5 flex items-center justify-center">
           <AnimatePresence mode="wait" initial={false}>
             {paying && (
               <motion.p
