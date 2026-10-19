@@ -369,18 +369,18 @@ export default function Second({
         initial={{ opacity: 0, scale: 0.94, y: 10 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         transition={{ duration: 0.6, ease: 'easeOut', delay: 0.2 }}
-        className="relative z-30 my-auto w-36 sm:w-44 max-w-[180px] max-h-[145px] sm:max-h-[175px] min-h-0 shrink"
+        className="relative z-30 my-auto w-48 sm:w-48 shrink-0"
       >
-        <motion.div ref={boxRef} animate={boxAnim} className="relative w-full h-full flex items-center justify-center">
+        <motion.div ref={boxRef} animate={boxAnim} className="relative">
           {/* Ornate Gold & Marble Church Offering Box */}
-          <NerchapettiBox slotGlow={slotGlow} className="max-h-[145px] sm:max-h-[175px]" />
+          <NerchapettiBox slotGlow={slotGlow} />
         </motion.div>
       </motion.div>
 
       {/* 4. Running Total Display */}
       <div className="relative z-10 w-full my-auto flex items-center justify-center gap-2.5 shrink-0">
         <span className="font-malayalam text-xs text-sky-100 font-bold drop-shadow-[0_1px_2px_rgba(0,0,0,0.6)]">ആകെ സമർപ്പണം</span>
-        <div className="relative h-7 overflow-hidden min-w-[88px] px-3.5 flex items-center justify-center rounded-full bg-sky-700/50 border border-sky-400/60 backdrop-blur-md shadow-[0_4px_18px_rgba(3,105,161,0.4)]">
+        <div className="relative h-7 overflow-hidden min-w-[84px] px-3.5 flex items-center justify-center rounded-full bg-sky-700/50 border border-sky-400/60 backdrop-blur-md shadow-[0_4px_18px_rgba(3,105,161,0.4)]">
           <AnimatePresence mode="popLayout" initial={false}>
             <motion.span
               key={amount}
@@ -399,7 +399,7 @@ export default function Second({
 
       {/* 5. Coins Section */}
       <div className="relative z-10 w-full mt-1 shrink-0 px-1">
-        <Label className="font-malayalam text-sky-100 font-bold drop-shadow-[0_1px_2px_rgba(0,0,0,0.6)] mb-1">നാണയങ്ങൾ · Coins</Label>
+        <Label className="font-malayalam text-sky-100 font-bold drop-shadow-[0_1px_2px_rgba(0,0,0,0.6)] mb-1.5">നാണയങ്ങൾ · Coins</Label>
         <div className="grid grid-cols-5 gap-1.5 px-1">
           {COINS.map((value, i) => (
             <motion.button
@@ -411,7 +411,7 @@ export default function Second({
               onClick={(e) => placeOffering(value, e)}
               disabled={paying}
               aria-label={`Offer ${value} rupee coin`}
-              className={`mx-auto w-full max-w-[42px] sm:max-w-[46px] focus:outline-none focus-visible:ring-1 focus-visible:ring-sky-300 rounded-full transition-opacity ${
+              className={`mx-auto w-full max-w-[48px] focus:outline-none focus-visible:ring-1 focus-visible:ring-sky-300 rounded-full transition-opacity ${
                 paying ? 'opacity-40 cursor-not-allowed' : 'cursor-pointer'
               }`}
             >
@@ -422,9 +422,9 @@ export default function Second({
       </div>
 
       {/* 6. Notes Section */}
-      <div className="relative z-10 w-full mt-1.5 shrink-0 px-1">
-        <Label className="font-malayalam text-sky-100 font-bold drop-shadow-[0_1px_2px_rgba(0,0,0,0.6)] mb-1">നോട്ടുകൾ · Notes</Label>
-        <div className="grid grid-cols-2 gap-2 px-0.5">
+      <div className="relative z-10 w-full mt-2 shrink-0 px-1">
+        <Label className="font-malayalam text-sky-100 font-bold drop-shadow-[0_1px_2px_rgba(0,0,0,0.6)] mb-1.5">നോട്ടുകൾ · Notes</Label>
+        <div className="grid grid-cols-2 gap-2.5 px-0.5">
           {NOTES.map((value, i) => (
             <motion.button
               key={value}
@@ -435,7 +435,7 @@ export default function Second({
               onClick={(e) => placeOffering(value, e)}
               disabled={paying}
               aria-label={`Offer ${value} rupee note`}
-              className={`mx-auto w-full max-w-[115px] sm:max-w-[125px] flex items-center justify-center focus:outline-none focus-visible:ring-1 focus-visible:ring-sky-300 rounded-md transition-opacity ${
+              className={`mx-auto w-full max-w-[125px] flex items-center justify-center focus:outline-none focus-visible:ring-1 focus-visible:ring-sky-300 rounded-md transition-opacity ${
                 paying ? 'opacity-40 cursor-not-allowed' : 'cursor-pointer'
               }`}
             >
@@ -451,12 +451,12 @@ export default function Second({
           onClick={submitOffering}
           disabled={amount === 0 || paying}
           whileTap={amount === 0 || paying ? undefined : { scale: 0.97 }}
-          className={`w-full py-2.5 px-6 rounded-2xl font-malayalam text-base border transition-all duration-300 flex items-center justify-center gap-2 ${
+          className={`w-full py-2.5 sm:py-2.5 px-6 rounded-2xl font-malayalam text-base sm:text-base border transition-all duration-300 flex items-center justify-center gap-2 ${
             paying
               ? 'bg-gradient-to-r from-sky-500/80 via-sky-400/80 to-blue-500/80 text-white font-bold border-sky-300/40 cursor-wait'
               : amount > 0
                 ? 'bg-gradient-to-r from-sky-500 via-sky-400 to-blue-600 text-white font-bold shadow-[0_8px_25px_rgba(14,165,233,0.5)] border-sky-200/70 cursor-pointer'
-                : 'bg-slate-900/80 text-sky-200/60 border-sky-400/30 cursor-not-allowed shadow-[0_2px_10px_rgba(0,0,0,0.4)]'
+                : 'bg-sky-500/15 text-sky-200/45 border-sky-400/20 cursor-not-allowed'
           }`}
         >
           {paying ? (
@@ -465,12 +465,12 @@ export default function Second({
               <span>സമർപ്പിക്കുന്നു...</span>
             </>
           ) : (
-            <span>സമർപ്പിക്കുക</span>
+            <span className={amount > 0 ? '' : 'opacity-70'}>സമർപ്പിക്കുക</span>
           )}
         </motion.button>
 
         {/* Status line */}
-        <div className="h-3.5 mt-0.5 flex items-center justify-center">
+        <div className="h-4 mt-1 flex items-center justify-center">
           <AnimatePresence mode="wait" initial={false}>
             {paying && (
               <motion.p
