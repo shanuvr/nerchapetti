@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowLeft, Church, Share2, Volume2, VolumeX, Maximize2, X, HeartHandshake } from 'lucide-react';
+import { ArrowLeft, Church, Share2, X, HeartHandshake } from 'lucide-react';
 
 /* Church collection UPI handle */
 const CHURCH_UPI_ID = 'stmaryscathedral@upi';
@@ -58,113 +58,84 @@ const BIBLE_VERSES = [
  * Sanctuary Altar Blessing Card
  * Features continuous auto-scrolling scripture slogans.
  */
-function SanctuaryAltarCard({ onExpand, churchName }) {
-  const [isMuted, setIsMuted] = useState(true);
-
-  const toggleSound = (e) => {
-    e?.stopPropagation();
-    setIsMuted((prev) => !prev);
-  };
-
+function SanctuaryAltarCard({ churchName }) {
   return (
-    <div className="relative w-full h-full flex flex-col items-center overflow-hidden rounded-2xl bg-slate-950 border border-sky-400/40 shadow-[inset_0_1px_0_rgba(255,255,255,0.2),0_8px_24px_rgba(0,0,0,0.8)] backdrop-blur-md">
-      {/* Top Header Row */}
-      <div className="w-full z-30 flex items-center justify-between px-3.5 py-2 bg-slate-950/95 border-b border-sky-400/30 shrink-0">
-        <div className="flex items-center gap-1.5">
-          <span className="relative flex h-2 w-2">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75" />
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-sky-400" />
-          </span>
-          <span className="font-malayalam text-[11px] sm:text-xs font-bold text-sky-100 tracking-wide">
-            വിശുദ്ധ ബൈബിൾ സന്ദേശങ്ങൾ
-          </span>
-        </div>
-
-        {/* Top Sound Toggle Pill */}
-        <button
-          onClick={toggleSound}
-          type="button"
-          aria-label={isMuted ? 'Turn Sound On' : 'Turn Sound Off'}
-          className={`flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[8.5px] sm:text-[9px] font-semibold border transition-all cursor-pointer ${
-            !isMuted
-              ? 'bg-sky-500/25 border-sky-300 text-sky-100 shadow-[0_0_8px_rgba(56,189,248,0.4)]'
-              : 'bg-slate-900/90 border-sky-400/40 text-slate-300 hover:text-sky-200'
-          }`}
-        >
-          {!isMuted ? (
-            <>
-              <Volume2 className="w-2.5 h-2.5 text-sky-300" />
-              <span>Sound ON</span>
-            </>
-          ) : (
-            <>
-              <VolumeX className="w-2.5 h-2.5 text-slate-400" />
-              <span>Sound OFF</span>
-            </>
-          )}
-        </button>
+    <div className="relative w-full max-w-[300px] sm:max-w-[320px] mx-auto flex flex-col items-center overflow-hidden rounded-2xl bg-slate-950/35 border border-sky-400/25 shadow-[inset_0_1px_0_rgba(255,255,255,0.15),0_10px_28px_rgba(0,0,0,0.5)] backdrop-blur-md px-3 py-2.5 sm:px-3.5 sm:py-3">
+      {/* Top Subtle Header Indicator */}
+      <div className="flex items-center justify-center gap-1.5 mb-1 px-0.5 shrink-0">
+        <span className="relative flex h-1.5 w-1.5">
+          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75" />
+          <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-amber-400" />
+        </span>
+        <span className="font-malayalam text-[9.5px] sm:text-[10px] font-bold text-sky-200/90 tracking-wide">
+          വിശുദ്ധ തിരുവചനം
+        </span>
       </div>
 
-      {/* Main Sanctuary Visual: Continuous Upward Scrolling Slogans */}
-      <div className="relative w-full flex-1 min-h-0 overflow-hidden bg-gradient-to-b from-slate-950 via-slate-900/95 to-slate-950 flex flex-col select-none">
-        {/* Divine Background Rays */}
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(56,189,248,0.14)_0%,transparent_75%)] pointer-events-none" />
+      {/* Main Scripture Content with Compact Fit */}
+      <motion.div
+        initial={{ opacity: 0, y: 6, scale: 0.98 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+        className="w-full flex flex-col items-center text-center select-none"
+      >
+        {/* Liturgical Golden Cross Divider */}
+        <div className="flex items-center justify-center gap-1.5 mb-1.5 text-amber-300/80 w-24">
+          <span className="h-[1px] flex-1 bg-gradient-to-r from-transparent to-amber-300/60" />
+          <span className="text-[11px] drop-shadow-[0_0_6px_rgba(251,191,36,0.6)]">✝</span>
+          <span className="h-[1px] flex-1 bg-gradient-to-l from-transparent to-amber-300/60" />
+        </div>
 
-        {/* Top Gradient Fade Overlay */}
-        <div className="absolute top-0 inset-x-0 h-10 bg-gradient-to-b from-slate-950 via-slate-950/80 to-transparent pointer-events-none z-20" />
+        {/* Malayalam Scripture Passage */}
+        <p className="font-malayalam text-[11.5px] sm:text-[12.5px] text-white/95 font-semibold leading-relaxed tracking-normal px-1 drop-shadow-[0_2px_10px_rgba(0,0,0,0.95)]">
+          &ldquo;കൊടുക്കുവിൻ; നിങ്ങൾക്കും കിട്ടും. അമർത്തിക്കുലുക്കി നിറച്ചളന്ന് അവർ നിങ്ങളുടെ മടിയിൽ ഇട്ടുതരും. നിങ്ങൾ അളക്കുന്ന അളവു കൊണ്ടുതന്നെ നിങ്ങൾക്കും അളന്നു കിട്ടും.&rdquo;
+        </p>
 
-        {/* Bottom Gradient Fade Overlay */}
-        <div className="absolute bottom-0 inset-x-0 h-12 bg-gradient-to-t from-slate-950 via-slate-950/90 to-transparent pointer-events-none z-20" />
+        {/* Reference Pill Badge */}
+        <div className="mt-2 inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-amber-400/15 border border-amber-300/35 shadow-[0_2px_8px_rgba(245,195,88,0.2)] backdrop-blur-sm">
+          <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse shadow-[0_0_6px_rgba(251,191,36,0.8)]" />
+          <span className="font-malayalam text-[10px] sm:text-[10.5px] font-bold text-amber-200 tracking-wide drop-shadow-sm">
+            ലൂക്കാ  6  : 38
+          </span>
+        </div>
+      </motion.div>
 
-        {/* Continuous Upward Scrolling Slogans */}
-        <div className="w-full flex flex-col items-center px-3 pt-6 pb-4 bible-news-crawl">
-          {[...BIBLE_VERSES, ...BIBLE_VERSES].map((verse, i) => (
-            <div
-              key={`${verse.id}-${i}`}
-              className="w-full flex flex-col items-center text-center my-3 transition-opacity duration-300"
-            >
-              {/* Reference Pill Badge */}
-              <div className="flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-amber-400/15 border border-amber-300/45 shadow-[0_2px_10px_rgba(245,195,88,0.15)] mb-2.5">
-                <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" />
-                <span className="font-malayalam text-[10.5px] font-bold text-amber-200">{verse.ref}</span>
-              </div>
+      {/* 
+      ========================================================================
+      PREVIOUS MOVING UP SLOGANS CODE (COMMENTED OUT AS REQUESTED):
+      ========================================================================
+      */}
+      {/* Top Gradient Fade Overlay */}
+      {/* <div className="absolute top-0 inset-x-0 h-10 bg-gradient-to-b from-slate-950 via-slate-950/80 to-transparent pointer-events-none z-20" /> */}
 
-              {/* Malayalam Scripture Passage */}
-              <p className="font-malayalam text-[12.5px] sm:text-[13.5px] text-white font-semibold leading-relaxed px-2 drop-shadow-[0_2px_10px_rgba(0,0,0,0.95)] max-w-[340px]">
-                &ldquo;{verse.ml}&rdquo;
-              </p>
+      {/* Bottom Gradient Fade Overlay */}
+      {/* <div className="absolute bottom-0 inset-x-0 h-12 bg-gradient-to-t from-slate-950 via-slate-950/90 to-transparent pointer-events-none z-20" /> */}
 
-              {/* Liturgical Golden Cross Divider */}
-              <div className="flex items-center justify-center gap-2 mt-4 mb-2 text-amber-300/60 w-36">
-                <span className="h-[1px] flex-1 bg-gradient-to-r from-transparent to-amber-300/60" />
-                <span className="text-xs">✝</span>
-                <span className="h-[1px] flex-1 bg-gradient-to-l from-transparent to-amber-300/60" />
-              </div>
+      {/* Continuous Upward Scrolling Slogans */}
+      {/* <div className="w-full flex flex-col items-center px-3 pt-6 pb-4 bible-news-crawl">
+        {[...BIBLE_VERSES, ...BIBLE_VERSES].map((verse, i) => (
+          <div
+            key={`${verse.id}-${i}`}
+            className="w-full flex flex-col items-center text-center my-3 transition-opacity duration-300"
+          >
+            <div className="flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-amber-400/15 border border-amber-300/45 shadow-[0_2px_10px_rgba(245,195,88,0.15)] mb-2.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" />
+              <span className="font-malayalam text-[10.5px] font-bold text-amber-200">{verse.ref}</span>
             </div>
-          ))}
-        </div>
 
-        {/* Optional Expand Fullscreen Button */}
-        {onExpand && (
-          <div className="absolute bottom-2 right-2 z-30 pointer-events-auto">
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                onExpand({
-                  title: 'വിശുദ്ധ തിരുവചന സൂക്തങ്ങൾ',
-                  desc: 'നേർച്ച സമർപ്പണത്തിനും അനുഗ്രഹങ്ങൾക്കുമായുള്ള വിശുദ്ധ തിരുവചനങ്ങൾ.',
-                  verses: BIBLE_VERSES,
-                });
-              }}
-              type="button"
-              aria-label="Expand Verses"
-              className="p-1.5 rounded-full bg-slate-950/80 border border-sky-400/35 text-sky-200 hover:text-white backdrop-blur-md shadow-lg active:scale-95 transition-all cursor-pointer"
-            >
-              <Maximize2 className="w-3.5 h-3.5" />
-            </button>
+            <p className="font-malayalam text-[12.5px] sm:text-[13.5px] text-white font-semibold leading-relaxed px-2 drop-shadow-[0_2px_10px_rgba(0,0,0,0.95)] max-w-[340px]">
+              &ldquo;{verse.ml}&rdquo;
+            </p>
+
+            <div className="flex items-center justify-center gap-2 mt-4 mb-2 text-amber-300/60 w-36">
+              <span className="h-[1px] flex-1 bg-gradient-to-r from-transparent to-amber-300/60" />
+              <span className="text-xs">✝</span>
+              <span className="h-[1px] flex-1 bg-gradient-to-l from-transparent to-amber-300/60" />
+            </div>
           </div>
-        )}
-      </div>
+        ))}
+      </div> */}
+      {/* ======================================================================== */}
     </div>
   );
 }
@@ -411,8 +382,8 @@ export default function Third({
       </div>
 
       {/* 3. Sanctuary Altar Blessing Card */}
-      <div className="relative z-10 w-full flex-1 min-h-[180px] sm:min-h-[220px] flex flex-col py-1 overflow-hidden">
-        <SanctuaryAltarCard onExpand={setActiveModal} churchName={churchName} />
+      <div className="relative z-10 w-full flex flex-col items-center justify-center my-auto py-1">
+        <SanctuaryAltarCard churchName={churchName} />
       </div>
 
       {/* 4. Receipt Breakdown Card */}
